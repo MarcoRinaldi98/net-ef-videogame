@@ -149,7 +149,25 @@ internal class Program
                     break;
                 // Stampa tutti i videogiochi prodotti da una software house;
                 case 5:
-                    
+                    {
+                        Console.Write("Inserisci l'id della software house della quale ne vuoi vedere i videogiochi: ");
+                        if (long.TryParse(Console.ReadLine(), out long idSoftwareHouse))
+                        {
+                            using (VideogameContext db = new VideogameContext())
+                            {
+                                List<Videogame> gamesBySoftwareHouse = db.Videogames.Where(vg => vg.SoftwareHouseId == idSoftwareHouse).ToList();
+
+                                foreach (var game in gamesBySoftwareHouse)
+                                {
+                                    Console.WriteLine($"- {game.Name} ({game.ReleaseDate})");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Valore non valido. Inserisci un numero intero per l'ID della Software House!");
+                        }
+                    }
                     break;
                 // Cancellare un videogioco;
                 case 6:
